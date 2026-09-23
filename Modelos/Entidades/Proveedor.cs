@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Modelos.Entidades
 {
-    internal class Proveedor
+    public class Proveedor
     {
         public Guid Id { get; set; }
         public TipoIdentificacion TipoIdentificacion { get; set; }
