@@ -1,0 +1,55 @@
+﻿@model Proyecto1_Carniceria_Michael_VS.Models.BuscarClienteViewModel
+
+@{
+    ViewData["Title"] = "Buscar Cliente";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Cliente/registrar.css" asp-append-version="true" />
+}
+
+<div class="form-page">
+
+    <div class="form-header">
+        <h1>Buscar Cliente</h1>
+        <p>Ingrese la identificación del cliente que desea consultar.</p>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="BuscarCliente" method="post">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <label asp-for="Identificacion" class="form-label">Identificación</label>
+                    <input asp-for="Identificacion" class="form-control" />
+                    <span asp-validation-for="Identificacion" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="ListarClientes" class="btn btn-secondary">Volver</a>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.SeRealizoBusqueda)
+    {
+        <div class="form-card mt-3">
+            @if (Model.ClienteEncontrado is null)
+            {
+                <p>No se encontró ningún cliente con esa identificación.</p>
+            }
+            else
+            {
+                <p><strong>Identificación:</strong> @Model.ClienteEncontrado.Identificacion</p>
+                <p><strong>Nombre:</strong> @Model.ClienteEncontrado.Nombre @Model.ClienteEncontrado.PrimerApellido @Model.ClienteEncontrado.SegundoApellido</p>
+                <p><strong>Fecha de Nacimiento:</strong> @Model.ClienteEncontrado.FechaNacimiento.ToString("dd/MM/yyyy")</p>
+            }
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -70,6 +70,10 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                 {
                     ModelState.AddModelError("Identificacion", "Ya existe un cliente registrado con esta identificación.");
                 }
+                else if (viewModel.FechaNacimiento > DateTime.Now)
+                {
+                    ModelState.AddModelError("FechaNacimiento", "La fecha de nacimiento no puede ser una fecha futura.");
+                }
                 else
                 {
                     var cliente = new Cliente
@@ -150,6 +154,10 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                 {
                     ModelState.AddModelError("Identificacion", "Ya existe un cliente registrado con esta identificación.");
                 }
+                else if (viewModel.FechaNacimiento > DateTime.Now)
+                {
+                    ModelState.AddModelError("FechaNacimiento", "La fecha de nacimiento no puede ser una fecha futura.");
+                }
                 else
                 {
                     cliente.TipoIdentificacion = viewModel.TipoIdentificacion;
@@ -166,6 +174,42 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
             CargarTiposIdentificacion();
             return View(viewModel);
         }//fn editar post
+
+        [HttpPost]
+        public IActionResult EliminarCliente(Guid id)
+        {
+            var cliente = _datos.Clientes.FirstOrDefault(c => c.Id == id);
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            _datos.Clientes.Remove(cliente);
+            return RedirectToAction("ListarClientes");
+        }//fn eliminar
+
+        [HttpGet]
+        public IActionResult BuscarCliente()
+        {
+            return View(new BuscarClienteViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult BuscarCliente(BuscarClienteViewModel viewModel)
+        {
+            if (string.IsNullOrWhiteSpace(viewModel.Identificacion))
+            {
+                ModelState.AddModelError("Identificacion", "El campo de identificación es obligatorio.");
+                return View(viewModel);
+            }
+
+            // Bandera para saber si ya se buscó, así mostrar el mensaje de "sin resultados"
+            viewModel.SeRealizoBusqueda = true;
+            // Buscamos el cliente por identificación
+            viewModel.ClienteEncontrado = _datos.Clientes
+                .FirstOrDefault(c => c.Identificacion == viewModel.Identificacion);
+
+            return View(viewModel);
+        }//fn buscar post
 
         #region Metodos Privados
 
