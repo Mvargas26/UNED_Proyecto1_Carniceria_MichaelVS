@@ -29,6 +29,7 @@ html, body {
 
 main {
     padding-top: 1.5rem;
+    padding-bottom: 3rem;
     flex: 1;
 }
 
@@ -116,7 +117,7 @@ a {
     background-color: #2B2B2B;
     color: #D9D3C7;
     border-top: none !important;
-    margin-top: 3rem;
+    margin-top: 4rem;
 }
 
     .footer p {
