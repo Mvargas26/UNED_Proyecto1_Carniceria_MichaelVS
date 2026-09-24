@@ -22,15 +22,14 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
             return View(_datos.Clientes);
         }//fn index
 
-       public IActionResult Registrar()
+       public IActionResult RegistrarCliente()
         {
             CargarTiposIdentificacion();
             return View();
         }//fn registrar
 
-
         [HttpPost]
-        public IActionResult Registrar(ClienteViewModel viewModel)
+        public IActionResult RegistrarCliente(ClienteViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -91,6 +90,82 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
             CargarTiposIdentificacion(); //lo pasamos de nuevo para que se cargue de nuevo en caso de fallo
             return View(viewModel);
         }//fn registrar post 
+
+        public IActionResult EditarCliente(Guid id)
+        {
+            var cliente = _datos.Clientes.FirstOrDefault(c => c.Id == id);
+
+            if (cliente == null)
+            {
+                return NotFound();
+            }
+            var viewModel = new ClienteViewModel
+            {
+                TipoIdentificacion = cliente.TipoIdentificacion,
+                Identificacion = cliente.Identificacion,
+                Nombre = cliente.Nombre,
+                PrimerApellido = cliente.PrimerApellido,
+                SegundoApellido = cliente.SegundoApellido,
+                FechaNacimiento = cliente.FechaNacimiento
+            };
+
+            ViewBag.ClienteId = cliente.Id;
+            CargarTiposIdentificacion();
+            return View(viewModel);
+        }//fn editar
+
+        [HttpPost]
+        public IActionResult EditarCliente(Guid id, ClienteViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var cliente = _datos.Clientes.FirstOrDefault(c => c.Id == id);
+
+                if (cliente == null)
+                {
+                    return NotFound();
+                }
+                //validamos que cumpla los formatos de identificacion segun el tipo seleccionado
+                bool formatoValido;
+                switch (viewModel.TipoIdentificacion)
+                {
+                    case TipoIdentificacion.CedulaNacional:
+                        formatoValido = Regex.IsMatch(viewModel.Identificacion, @"^\d-\d{4}-\d{4}$");
+                        break;
+                    case TipoIdentificacion.Dimex:
+                        formatoValido = Regex.IsMatch(viewModel.Identificacion, @"^\d{12}$");
+                        break;
+                    case TipoIdentificacion.Pasaporte:
+                        formatoValido = Regex.IsMatch(viewModel.Identificacion, @"^[a-zA-Z0-9]{1,50}$");
+                        break;
+                    default:
+                        formatoValido = false;
+                        break;
+                }
+                if (!formatoValido)
+                {
+                    ModelState.AddModelError("Identificacion", "El formato de la identificación no es válido para el tipo seleccionado.");
+                }
+                else if (_datos.Clientes.Any(c => c.Identificacion == viewModel.Identificacion && c.Id != id))
+                {
+                    ModelState.AddModelError("Identificacion", "Ya existe un cliente registrado con esta identificación.");
+                }
+                else
+                {
+                    cliente.TipoIdentificacion = viewModel.TipoIdentificacion;
+                    cliente.Identificacion = viewModel.Identificacion;
+                    cliente.Nombre = viewModel.Nombre;
+                    cliente.PrimerApellido = viewModel.PrimerApellido;
+                    cliente.SegundoApellido = viewModel.SegundoApellido;
+                    cliente.FechaNacimiento = viewModel.FechaNacimiento;
+                    return RedirectToAction("ListarClientes");
+                }
+            }
+
+            ViewBag.ClienteId = id;
+            CargarTiposIdentificacion();
+            return View(viewModel);
+        }//fn editar post
 
         #region Metodos Privados
 
