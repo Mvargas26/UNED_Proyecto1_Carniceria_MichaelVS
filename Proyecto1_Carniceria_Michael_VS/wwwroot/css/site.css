@@ -24,6 +24,12 @@
 /* ---------- Base ---------- */
 html, body {
     height: 100%;
+
+}
+
+main {
+    padding-top: 1.5rem;
+    flex: 1;
 }
 
 /* Fondo crema general y tipografía base */
@@ -37,10 +43,6 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-}
-
-main {
-    flex: 1;
 }
 
 /* Títulos con tipografia Playfair */
@@ -114,6 +116,7 @@ a {
     background-color: #2B2B2B;
     color: #D9D3C7;
     border-top: none !important;
+    margin-top: 3rem;
 }
 
     .footer p {
@@ -201,11 +204,38 @@ a {
 /* ---------- Tablas ---------- */
 .table {
     background-color: var(--cg-surface);
-    border-radius: var(--cg-radius);
-    overflow: hidden;
-    box-shadow: var(--cg-shadow);
     margin-bottom: 0;
+    --bs-table-bg: transparent;
+    --bs-table-color: var(--cg-text);
 }
+
+    /* Cabecera verde con texto claro */
+    .table > thead th {
+        background-color: var(--cg-primary);
+        color: #fff;
+        font-weight: 500;
+        font-family: 'Inter', sans-serif;
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        border: none;
+        padding: 1rem 1rem;
+    }
+
+    .table > tbody td {
+        padding: 0.85rem 1rem;
+        vertical-align: middle;
+        border-color: var(--cg-border);
+        background-color: transparent;
+    }
+
+    .table > tbody tr {
+        transition: background-color 0.15s ease;
+    }
+
+    .table > tbody tr:hover {
+        background-color: #F5F1E8;
+    }
 
     /* Cabecera verde con texto claro */
     .table > thead {
@@ -303,3 +333,4 @@ a {
         font-size: 0.9rem;
     }
 }
+

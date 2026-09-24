@@ -1,0 +1,77 @@
+﻿@using Modelos
+@using Modelos.Enums
+@model Proyecto1_Carniceria_Michael_VS.Models.ClienteViewModel
+
+@{
+    ViewData["Title"] = "Registrar Cliente";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Cliente/registrar.css" asp-append-version="true" />
+}
+
+<div class="form-page">
+
+    <div class="form-header">
+        <h1>Registrar Cliente</h1>
+        <p>Complete la información para agregar un nuevo cliente.</p>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="Registrar" method="post">
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <label asp-for="TipoIdentificacion" class="form-label">Tipo de Identificación</label>
+                    <select asp-for="TipoIdentificacion" class="form-select"
+                            asp-items="Html.GetEnumSelectList<TipoIdentificacion>()">
+                    </select>
+                    <span asp-validation-for="TipoIdentificacion" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-8">
+                    <label asp-for="Identificacion" class="form-label">Identificación</label>
+                    <input asp-for="Identificacion" class="form-control" />
+                    <span asp-validation-for="Identificacion" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="Nombre" class="form-label">Nombre</label>
+                    <input asp-for="Nombre" class="form-control" />
+                    <span asp-validation-for="Nombre" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="PrimerApellido" class="form-label">Primer Apellido</label>
+                    <input asp-for="PrimerApellido" class="form-control" />
+                    <span asp-validation-for="PrimerApellido" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="SegundoApellido" class="form-label">Segundo Apellido</label>
+                    <input asp-for="SegundoApellido" class="form-control" />
+                    <span asp-validation-for="SegundoApellido" class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6">
+                    <label asp-for="FechaNacimiento" class="form-label">Fecha de Nacimiento</label>
+                    <input asp-for="FechaNacimiento" type="date" class="form-control" />
+                    <span asp-validation-for="FechaNacimiento" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+                <button type="submit" class="btn btn-primary">Registrar</button>
+            </div>
+
+        </form>
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
