@@ -75,16 +75,18 @@
 
                 <div class="col-md-6">
                     <label asp-for="AreaTrabajo" class="form-label">Área de Trabajo</label>
-                    <select asp-for="AreaTrabajo" class="form-select"
+                    <select asp-for="AreaTrabajo" class="form-select" id="selectArea"
                             asp-items="ViewBag.AreasTrabajo">
+                            <option value=""> Seleccione un área </option>
                     </select>
                     <span asp-validation-for="AreaTrabajo" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-6">
                     <label asp-for="Puesto" class="form-label">Puesto</label>
-                    <select asp-for="Puesto" class="form-select"
+                    <select asp-for="Puesto" class="form-select" id="selectPuesto"
                             asp-items="ViewBag.Puestos">
+                            <option value=""> Seleccione un puesto </option>
                     </select>
                     <span asp-validation-for="Puesto" class="text-danger"></span>
                 </div>
@@ -115,4 +117,6 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script> const mapeoAreaPuesto = @Html.Raw(ViewBag.MapeoAreaPuesto); </script>
+    <script src="~/js/Empleados/registrarEmpleado.js"></script>
 }

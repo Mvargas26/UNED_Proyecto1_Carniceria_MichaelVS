@@ -137,7 +137,30 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
             var turnos = Enum.GetValues(typeof(Turno)).Cast<Turno>()
                 .Select(t => new { Valor = t, Texto = t.ObtenerNombreVisible() });
             ViewBag.Turnos = new SelectList(turnos, "Valor", "Texto");
+
+            //Pasamos el mapeo Área/Puestos al JS para que pueda filtrar los puestos según el área seleccionada
+            ViewBag.MapeoAreaPuesto = System.Text.Json.JsonSerializer.Serialize(ObtenerMapeoAreaPuesto());
         }
+
+        // Armamos el mapeo Área/Puestos y luego lo pasamos al JS
+        private Dictionary<string, List<string>> ObtenerMapeoAreaPuesto()
+        {
+            var mapeo = new Dictionary<string, List<string>>();
+
+            foreach (AreaTrabajo area in Enum.GetValues(typeof(AreaTrabajo)))
+            {
+                var puestosDelArea = Enum.GetValues(typeof(Puesto))
+                    .Cast<Puesto>()
+                    .Where(p => PuestoPerteneceAArea(area, p))
+                    .Select(p => p.ToString())
+                    .ToList();
+
+                mapeo[area.ToString()] = puestosDelArea;
+            }
+
+            return mapeo;
+        }
+
 
         #endregion
 
