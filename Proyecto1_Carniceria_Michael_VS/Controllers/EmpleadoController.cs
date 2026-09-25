@@ -199,6 +199,28 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
         }//fn EliminarEmpleado
 
 
+        [HttpGet]
+        public IActionResult BuscarEmpleado()
+        {
+            return View(new BuscarEmpleadoViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult BuscarEmpleado(BuscarEmpleadoViewModel viewModel)
+        {
+            if (string.IsNullOrWhiteSpace(viewModel.Identificacion))
+            {
+                ModelState.AddModelError("Identificacion", "El campo de identificación es obligatorio.");
+                return View(viewModel);
+            }
+
+            viewModel.SeRealizoBusqueda = true;
+            viewModel.EmpleadoEncontrado = _datos.Empleados
+                .FirstOrDefault(e => e.Identificacion == viewModel.Identificacion);
+
+            return View(viewModel);
+
+        }//fn BuscarEmpleado
 
         #region Metodos Internos
 

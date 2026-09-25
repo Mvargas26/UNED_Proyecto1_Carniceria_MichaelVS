@@ -1,0 +1,62 @@
+﻿@using Modelos.Entidades
+@using Modelos.Enums.Helpers
+@model Proyecto1_Carniceria_Michael_VS.Models.BuscarEmpleadoViewModel
+
+@{
+    ViewData["Title"] = "Buscar Empleado";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Empleado/registrarEmpleado.css" asp-append-version="true" />
+}
+
+<div class="form-page">
+
+    <div class="form-header">
+        <h1>Buscar Empleado</h1>
+        <p>Ingrese la identificación del empleado que desea consultar.</p>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="BuscarEmpleado" method="post">
+            <div class="row g-3">
+                <div class="col-md-8">
+                    <label asp-for="Identificacion" class="form-label">Identificación</label>
+                    <input asp-for="Identificacion" class="form-control" />
+                    <span asp-validation-for="Identificacion" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="ListarEmpleados" class="btn btn-secondary">Volver</a>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.SeRealizoBusqueda)
+    {
+        <div class="form-card mt-3">
+            @if (Model.EmpleadoEncontrado is null)
+            {
+                <p>No se encontró ningún empleado con esa identificación.</p>
+            }
+            else
+            {
+                <p><strong>Identificación:</strong> @Model.EmpleadoEncontrado.Identificacion</p>
+                <p><strong>Nombre:</strong> @Model.EmpleadoEncontrado.Nombre @Model.EmpleadoEncontrado.PrimerApellido @Model.EmpleadoEncontrado.SegundoApellido</p>
+                <p><strong>Fecha de Nacimiento:</strong> @Model.EmpleadoEncontrado.FechaNacimiento.ToString("dd/MM/yyyy")</p>
+                <p><strong>Área de Trabajo:</strong> @Model.EmpleadoEncontrado.AreaTrabajo.ObtenerNombreVisible()</p>
+                <p><strong>Puesto:</strong> @Model.EmpleadoEncontrado.Puesto.ObtenerNombreVisible()</p>
+                <p><strong>Turno:</strong> @Model.EmpleadoEncontrado.Turno.ObtenerNombreVisible()</p>
+                <p><strong>Salario Mensual:</strong> @Model.EmpleadoEncontrado.SalarioMensual.ToString("C0")</p>
+                <p><strong>Fecha de Ingreso:</strong> @Model.EmpleadoEncontrado.FechaIngreso.ToString("dd/MM/yyyy")</p>
+            }
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
