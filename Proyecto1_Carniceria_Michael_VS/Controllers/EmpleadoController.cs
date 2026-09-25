@@ -92,6 +92,111 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
             return View(viewModel);
         }
 
+        public IActionResult EditarEmpleado (Guid id)
+        {
+            var empleado = _datos.Empleados.FirstOrDefault(e => e.Id == id);
+            if (empleado == null)
+            {
+                return NotFound();
+            }
+            var viewModel = new EmpleadoViewModel
+            {
+                TipoIdentificacion = empleado.TipoIdentificacion,
+                Identificacion = empleado.Identificacion,
+                Nombre = empleado.Nombre,
+                PrimerApellido = empleado.PrimerApellido,
+                SegundoApellido = empleado.SegundoApellido,
+                FechaNacimiento = empleado.FechaNacimiento,
+                SalarioMensual = empleado.SalarioMensual,
+                FechaIngreso = empleado.FechaIngreso,
+                AreaTrabajo = empleado.AreaTrabajo,
+                Puesto = empleado.Puesto,
+                Turno = empleado.Turno
+            };
+
+            ViewBag.EmpleadoId = empleado.Id;
+            CargarListasDesplegables();
+
+            return View(viewModel);
+        }//fn Get EditarEmpleado
+
+        [HttpPost]
+        public IActionResult EditarEmpleado(Guid id, EmpleadoViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var empleado = _datos.Empleados.FirstOrDefault(e => e.Id == id);
+                if (empleado == null)
+                {
+                    return NotFound();
+                }
+
+                //validamos que cumpla los formatos de identificacion segun el tipo seleccionado
+                bool formatoValido;
+                switch (viewModel.TipoIdentificacion)
+                {
+                    case TipoIdentificacion.CedulaNacional:
+                        formatoValido = Regex.IsMatch(viewModel.Identificacion, @"^\d-\d{4}-\d{4}$");
+                        break;
+                    case TipoIdentificacion.Dimex:
+                        formatoValido = Regex.IsMatch(viewModel.Identificacion, @"^\d{12}$");
+                        break;
+                    default:
+                        formatoValido = false;
+                        break;
+                }
+
+                if (!formatoValido)
+                {
+                    ModelState.AddModelError("Identificacion", "El formato de la identificación no es válido para el tipo seleccionado.");
+                }
+                else if (_datos.Empleados.Any(e => e.Identificacion == viewModel.Identificacion && e.Id != id))
+                {
+                    ModelState.AddModelError("Identificacion", "Ya existe un empleado registrado con esta identificación.");
+                }
+                else if (viewModel.FechaNacimiento > DateTime.Now)
+                {
+                    ModelState.AddModelError("FechaNacimiento", "La fecha de nacimiento no puede ser una fecha futura.");
+                }
+                else if (!PuestoPerteneceAArea(viewModel.AreaTrabajo, viewModel.Puesto))
+                {
+                    ModelState.AddModelError("Puesto", "El puesto seleccionado no corresponde al área de trabajo elegida.");
+                }
+                else
+                {
+                    empleado.TipoIdentificacion = viewModel.TipoIdentificacion;
+                    empleado.Identificacion = viewModel.Identificacion;
+                    empleado.Nombre = viewModel.Nombre;
+                    empleado.PrimerApellido = viewModel.PrimerApellido;
+                    empleado.SegundoApellido = viewModel.SegundoApellido;
+                    empleado.FechaNacimiento = viewModel.FechaNacimiento;
+                    empleado.SalarioMensual = viewModel.SalarioMensual;
+                    empleado.FechaIngreso = viewModel.FechaIngreso;
+                    empleado.AreaTrabajo = viewModel.AreaTrabajo;
+                    empleado.Puesto = viewModel.Puesto;
+                    empleado.Turno = viewModel.Turno;
+                    return RedirectToAction("ListarEmpleados");
+                }
+            }
+
+            ViewBag.EmpleadoId = id;
+            CargarListasDesplegables();
+            return View(viewModel);
+        }// fn Post EditarEmpleado
+
+        [HttpPost]
+        public IActionResult EliminarEmpleado(Guid id)
+        {
+            var empleado = _datos.Empleados.FirstOrDefault(e => e.Id == id);
+
+            if (empleado is null)
+            {
+                return NotFound();
+            }
+
+            _datos.Empleados.Remove(empleado);
+            return RedirectToAction("ListarEmpleados");
+        }//fn EliminarEmpleado
 
 
 

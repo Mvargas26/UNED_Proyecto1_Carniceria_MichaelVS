@@ -213,10 +213,10 @@ a {
     /* Cabecera verde con texto claro */
     .table > thead {
         background-color: var(--cg-primary);
-        color: #fff;
     }
 
         .table > thead th {
+            color: #fff !important;
             font-weight: 500;
             font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
