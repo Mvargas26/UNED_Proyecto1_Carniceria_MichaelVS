@@ -23,8 +23,7 @@
 
 /* ---------- Base ---------- */
 html, body {
-    height: 100%;
-
+    min-height: 100%;
 }
 
 main {
@@ -118,6 +117,7 @@ a {
     color: #D9D3C7;
     border-top: none !important;
     margin-top: 4rem;
+    position: static;
 }
 
     .footer p {
@@ -211,34 +211,6 @@ a {
 }
 
     /* Cabecera verde con texto claro */
-    .table > thead th {
-        background-color: var(--cg-primary);
-        color: #fff;
-        font-weight: 500;
-        font-family: 'Inter', sans-serif;
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        border: none;
-        padding: 1rem 1rem;
-    }
-
-    .table > tbody td {
-        padding: 0.85rem 1rem;
-        vertical-align: middle;
-        border-color: var(--cg-border);
-        background-color: transparent;
-    }
-
-    .table > tbody tr {
-        transition: background-color 0.15s ease;
-    }
-
-    .table > tbody tr:hover {
-        background-color: #F5F1E8;
-    }
-
-    /* Cabecera verde con texto claro */
     .table > thead {
         background-color: var(--cg-primary);
         color: #fff;
@@ -260,7 +232,7 @@ a {
         border-color: var(--cg-border);
     }
 
-    /* Hover crema al pasar el mouse por una fila */
+    /* Hover crema al pasar el mouse */
     .table > tbody tr {
         transition: background-color 0.15s ease;
     }
@@ -268,6 +240,13 @@ a {
         .table > tbody tr:hover {
             background-color: #F5F1E8;
         }
+
+/* Wrapper con scroll horizontal y sombra */
+.table-responsive {
+    border-radius: var(--cg-radius);
+    box-shadow: var(--cg-shadow);
+    overflow-x: auto;
+}
 
 /* ---------- Formularios ---------- */
 .form-control,

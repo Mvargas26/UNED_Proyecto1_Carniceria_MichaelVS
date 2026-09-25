@@ -1,0 +1,85 @@
+﻿@* ------------------------------------------------------------------------------*@
+@using Modelos.Entidades
+@using Modelos.Enums.Helpers
+@model List<Empleado>
+@* ------------------------------------------------------------------------------*@
+
+@{
+    ViewData["Title"] = "Empleados";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Empleado/listarEmpleados.css" asp-append-version="true" />
+}
+
+<div class="page-header">
+    <div>
+        <h1>Empleados</h1>
+        <p>Listado de personas empleadas registradas en el sistema.</p>
+        <a asp-action="RegistrarEmpleado" class="btn btn-primary">
+        <i class="bi bi-plus-lg me-1"></i> Registrar Empleado
+        </a>
+    </div>
+
+    <a asp-action="BuscarEmpleado" class="btn btn-secondary">
+        <i class="bi bi-search"></i> Buscar Empleado
+    </a>
+</div>
+
+@if (!Model.Any())
+{
+    <div class="empty-state">
+        <i class="bi bi-person-badge"></i>
+        <h3>No hay empleados registrados</h3>
+        <p>Comienza registrando el primer empleado.</p>
+    </div>
+}
+else
+{
+    <div class="table-wrapper table-responsive">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Identificación</th>
+                    <th>Nombre y Apellidos</th>
+
+                    <th>Fecha de Nacimiento</th>
+                    <th>Salario Mensual</th>
+                    <th>Fecha de Ingreso</th>
+                    <th>Área</th>
+                    <th>Puesto</th>
+                    <th>Turno</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var empleado in Model)
+                {
+                    <tr>
+                        <td>@empleado.Identificacion</td>
+                        <td>@empleado.Nombre @empleado.PrimerApellido @empleado.SegundoApellido</td>
+                        <td>@empleado.FechaNacimiento.ToString("dd/MM/yyyy")</td>
+                        <td>@empleado.SalarioMensual.ToString("C0")</td>
+                        <td>@empleado.FechaIngreso.ToString("dd/MM/yyyy")</td>
+                        <td>@empleado.AreaTrabajo.ObtenerNombreVisible()</td>
+                        <td>@empleado.Puesto.ObtenerNombreVisible()</td> @* usamos la clase que muestra el nombre bien escrito *@
+                        <td>@empleado.Turno.ObtenerNombreVisible()</td>
+                        <td class="text-end">
+                            <a asp-action="EditarEmpleado" asp-route-id="@empleado.Id" class="btn btn-sm btn-icon btn-edit" title="Editar">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+
+                            <form asp-action="EliminarEmpleado" asp-route-id="@empleado.Id" method="post"
+                                  onsubmit="return confirm('¿Está seguro que desea eliminar a @empleado.Nombre @empleado.PrimerApellido?');"
+                                  style="display:inline;">
+                                <button type="submit" class="btn btn-sm btn-icon btn-delete" title="Eliminar">
+                                    <i class="bi bi-trash"></i>
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
