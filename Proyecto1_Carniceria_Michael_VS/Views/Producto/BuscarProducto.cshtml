@@ -1,0 +1,85 @@
+﻿@using Modelos.Entidades
+@using Modelos.Enums.Helpers
+@model Proyecto1_Carniceria_Michael_VS.Models.BuscarProductoViewModel
+
+@{
+    ViewData["Title"] = "Buscar Producto";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Producto/registrarProducto.css" asp-append-version="true" />
+}
+
+<div class="form-page">
+
+    <div class="form-header">
+        <h1>Buscar Producto</h1>
+        <p>Ingrese el código o nombre del producto que desea consultar.</p>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="BuscarProducto" method="post">
+            <div class="row g-3">
+
+                <div class="col-12">
+                    <label class="form-label d-block">Buscar por</label>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" asp-for="CriterioBusqueda" value="Codigo" class="form-check-input" id="criterioCodigo" />
+                        <label class="form-check-label" for="criterioCodigo">Código</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" asp-for="CriterioBusqueda" value="Nombre" class="form-check-input" id="criterioNombre" />
+                        <label class="form-check-label" for="criterioNombre">Nombre</label>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <label asp-for="TextoBusqueda" class="form-label">Texto a buscar</label>
+                    <input asp-for="TextoBusqueda" class="form-control" />
+                    <span asp-validation-for="TextoBusqueda" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="ListarProductos" class="btn btn-secondary">Volver</a>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+    </div>
+
+       @if (Model.SeRealizoBusqueda)
+    {
+        <div class="form-card mt-3">
+            @if (Model.ProductoEncontrado is null)
+            {
+                <p>No se encontró ningún producto con ese criterio.</p>
+            }
+            else
+            {
+                bool existenciaBaja = Model.ProductoEncontrado.ExistenciaActual <= Model.ProductoEncontrado.ExistenciaMinima;
+
+                <p><strong>Código:</strong> @Model.ProductoEncontrado.CodigoProducto</p>
+                <p><strong>Nombre:</strong> @Model.ProductoEncontrado.NombreProducto</p>
+                <p><strong>Categoría:</strong> @Model.ProductoEncontrado.Categoria.ObtenerNombreVisible()</p>
+                <p><strong>Unidad de Medida:</strong> @Model.ProductoEncontrado.UnidadMedida.ObtenerNombreVisible()</p>
+                <p><strong>Precio:</strong> @Model.ProductoEncontrado.PrecioPorUnidadMedida.ToString("C2")</p>
+                <p><strong>Existencia Actual:</strong> @Model.ProductoEncontrado.ExistenciaActual</p>
+                <p><strong>Existencia Mínima:</strong> @Model.ProductoEncontrado.ExistenciaMinima</p>
+
+                @if (existenciaBaja)
+                {
+                    <div class="fila-advertencia p-2 rounded mt-2">
+                        <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+                        La existencia actual está igual o debajo del mínimo establecido.
+                    </div>
+                }
+            }
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

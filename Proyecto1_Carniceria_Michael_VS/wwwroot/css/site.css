@@ -248,6 +248,11 @@ a {
     overflow-x: auto;
 }
 
+/* Fila con existencia baja (Producto) */
+.fila-advertencia {
+    background-color: #F5E3E3;
+}
+
 /* ---------- Formularios ---------- */
 .form-control,
 .form-select {

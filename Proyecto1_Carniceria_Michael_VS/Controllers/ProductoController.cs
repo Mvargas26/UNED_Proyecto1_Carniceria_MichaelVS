@@ -123,6 +123,50 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public IActionResult EliminarProducto(Guid id)
+        {
+            var producto = _datos.Productos.FirstOrDefault(p => p.Id == id);
+
+            if (producto is null)
+            {
+                return NotFound();
+            }
+
+            _datos.Productos.Remove(producto);
+            return RedirectToAction("ListarProductos");
+        }
+
+        [HttpGet]
+        public IActionResult BuscarProducto()
+        {
+            return View(new BuscarProductoViewModel());
+        }
+
+        [HttpPost]
+        public IActionResult BuscarProducto(BuscarProductoViewModel viewModel)
+        {
+            if (string.IsNullOrWhiteSpace(viewModel.TextoBusqueda))
+            {
+                ModelState.AddModelError("TextoBusqueda", "Debe ingresar un código o nombre para buscar.");
+                return View(viewModel);
+            }
+
+            viewModel.SeRealizoBusqueda = true;
+
+            if (viewModel.CriterioBusqueda == "Codigo")
+            {
+                viewModel.ProductoEncontrado = _datos.Productos
+                    .FirstOrDefault(p => p.CodigoProducto == viewModel.TextoBusqueda);
+            }
+            else
+            {
+                viewModel.ProductoEncontrado = _datos.Productos
+                    .FirstOrDefault(p => p.NombreProducto == viewModel.TextoBusqueda);
+            }
+
+            return View(viewModel);
+        }
 
 
         #region Metodos Internos
