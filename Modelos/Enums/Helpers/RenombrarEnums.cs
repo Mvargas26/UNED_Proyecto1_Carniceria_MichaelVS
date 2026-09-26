@@ -77,7 +77,49 @@ namespace Modelos.Enums.Helpers
                     return turno.ToString();
             }
         }
-    
-    
+
+        public static string ObtenerNombreVisible(this Categoria categoria)
+        {
+            switch (categoria)
+            {
+                case Categoria.CarneDeRes:
+                    return "Carne de Res";
+                case Categoria.CarneDeCerdo:
+                    return "Carne de Cerdo";
+                case Categoria.Pollo:
+                    return "Pollo";
+                case Categoria.Embutidos:
+                    return "Embutidos";
+                case Categoria.ProductosProcesados:
+                    return "Productos Procesados";
+                case Categoria.Congelados:
+                    return "Congelados";
+                case Categoria.Otros:
+                    return "Otros";
+                default:
+                    return categoria.ToString();
+            }
+        }
+
+        public static string ObtenerNombreVisible(this UnidadMedida unidad)
+        {
+            switch (unidad)
+            {
+                case UnidadMedida.Kilogramo:
+                    return "Kilogramo";
+                case UnidadMedida.Libra:
+                    return "Libra";
+                case UnidadMedida.Unidad:
+                    return "Unidad";
+                case UnidadMedida.Paquete:
+                    return "Paquete";
+                case UnidadMedida.Bandeja:
+                    return "Bandeja";
+                default:
+                    return unidad.ToString();
+            }
+        }
+
+
     }//fn class
 }//fn space
