@@ -1,0 +1,75 @@
+﻿@using Modelos.Entidades
+@using Modelos.Enums.Helpers
+@model Proyecto1_Carniceria_Michael_VS.Models.BuscarProveedorViewModel
+
+@{
+    ViewData["Title"] = "Buscar Proveedor";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Proveedor/RegistrarProveedor.css" asp-append-version="true" />
+}
+
+<div class="form-page">
+
+    <div class="form-header">
+        <h1>Buscar Proveedor</h1>
+        <p>Ingrese la identificación o razón social del proveedor que desea consultar.</p>
+    </div>
+
+    <div class="form-card">
+        <form asp-action="BuscarProveedor" method="post">
+            <div class="row g-3">
+
+                <div class="col-12">
+                    <label class="form-label d-block">Buscar por</label>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" asp-for="CriterioBusqueda" value="Identificacion" class="form-check-input" id="criterioIdentificacion" />
+                        <label class="form-check-label" for="criterioIdentificacion">Identificación</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input type="radio" asp-for="CriterioBusqueda" value="RazonSocial" class="form-check-input" id="criterioRazonSocial" />
+                        <label class="form-check-label" for="criterioRazonSocial">Razón Social</label>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <label asp-for="TextoBusqueda" class="form-label">Texto a buscar</label>
+                    <input asp-for="TextoBusqueda" class="form-control" />
+                    <span asp-validation-for="TextoBusqueda" class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="form-actions">
+                <a asp-action="ListarProveedores" class="btn btn-secondary">Volver</a>
+                <button type="submit" class="btn btn-primary">Buscar</button>
+            </div>
+        </form>
+    </div>
+
+    @if (Model.SeRealizoBusqueda)
+    {
+        <div class="form-card mt-3">
+            @if (Model.ProveedorEncontrado is null)
+            {
+                <p>No se encontró ningún proveedor con ese criterio.</p>
+            }
+            else
+            {
+                <p><strong>Identificación:</strong> @Model.ProveedorEncontrado.Identificacion</p>
+                <p><strong>Razón Social:</strong> @Model.ProveedorEncontrado.RazonSocial</p>
+                <p><strong>Contacto:</strong> @Model.ProveedorEncontrado.NombreContacto</p>
+                <p><strong>Teléfono:</strong> @Model.ProveedorEncontrado.Telefono</p>
+                <p><strong>Correo:</strong> @Model.ProveedorEncontrado.CorreoElectronico</p>
+                <p><strong>Tipo de Suministro:</strong> @Model.ProveedorEncontrado.TipoSuministro.ObtenerNombreVisible()</p>
+                <p><strong>Frecuencia de Entrega:</strong> @Model.ProveedorEncontrado.FrecuenciaEntrega.ObtenerNombreVisible()</p>
+            }
+        </div>
+    }
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

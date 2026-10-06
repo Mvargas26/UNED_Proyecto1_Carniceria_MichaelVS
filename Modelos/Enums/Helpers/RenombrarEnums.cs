@@ -120,6 +120,68 @@ namespace Modelos.Enums.Helpers
             }
         }
 
+        public static string ObtenerNombreVisible(this TipoSuministro suministro)
+        {
+            switch (suministro)
+            {
+                case TipoSuministro.CarneDeRes:
+                    return "Carne de Res";
+                case TipoSuministro.CarneDeCerdo:
+                    return "Carne de Cerdo";
+                case TipoSuministro.Pollo:
+                    return "Pollo";
+                case TipoSuministro.Embutidos:
+                    return "Embutidos";
+                case TipoSuministro.ProductosProcesados:
+                    return "Productos Procesados";
+                case TipoSuministro.Empaques:
+                    return "Empaques";
+                case TipoSuministro.Condimentos:
+                    return "Condimentos";
+                case TipoSuministro.Otros:
+                    return "Otros";
+                default:
+                    return suministro.ToString();
+            }
+        }
+
+        public static string ObtenerNombreVisible(this FrecuenciaEntrega frecuencia)
+        {
+            switch (frecuencia)
+            {
+                case FrecuenciaEntrega.Diaria:
+                    return "Diaria";
+                case FrecuenciaEntrega.DosVecesPorSemana:
+                    return "Dos veces por semana";
+                case FrecuenciaEntrega.Semanal:
+                    return "Semanal";
+                case FrecuenciaEntrega.Quincenal:
+                    return "Quincenal";
+                case FrecuenciaEntrega.ContraPedido:
+                    return "Contra pedido";
+                default:
+                    return frecuencia.ToString();
+            }
+        }
+
+        public static string ObtenerNombreVisible(this TipoIdentificacion tipo)
+        {
+            switch (tipo)
+            {
+                case TipoIdentificacion.CedulaNacional:
+                    return "Cédula Nacional";
+                case TipoIdentificacion.Dimex:
+                    return "DIMEX";
+                case TipoIdentificacion.Pasaporte:
+                    return "Pasaporte";
+                case TipoIdentificacion.CedulaJuridica:
+                    return "Cédula Jurídica";
+                default:
+                    return tipo.ToString();
+            }
+        }
+
+
 
     }//fn class
 }//fn space
