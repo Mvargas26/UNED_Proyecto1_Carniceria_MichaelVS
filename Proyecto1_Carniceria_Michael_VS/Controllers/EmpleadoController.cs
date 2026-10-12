@@ -84,6 +84,9 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                     };
 
                     _datos.Empleados.Add(empleado);
+
+                    TempData["MensajeExito"] = "Operación realizada correctamente.";
+
                     return RedirectToAction("ListarEmpleados");
                 }
             }
@@ -175,6 +178,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                     empleado.AreaTrabajo = viewModel.AreaTrabajo;
                     empleado.Puesto = viewModel.Puesto;
                     empleado.Turno = viewModel.Turno;
+
+                    TempData["MensajeExito"] = "Operación realizada correctamente.";
                     return RedirectToAction("ListarEmpleados");
                 }
             }
@@ -195,6 +200,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
             }
 
             _datos.Empleados.Remove(empleado);
+
+            TempData["MensajeExito"] = "Operación realizada correctamente.";
             return RedirectToAction("ListarEmpleados");
         }//fn EliminarEmpleado
 

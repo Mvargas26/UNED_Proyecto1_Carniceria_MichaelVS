@@ -81,6 +81,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                     };
 
                     _datos.Proveedores.Add(proveedor);
+
+                    TempData["MensajeExito"] = "Operación realizada correctamente.";
                     return RedirectToAction("ListarProveedores");
                 }
             }
@@ -167,6 +169,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                     proveedor.CorreoElectronico = viewModel.CorreoElectronico;
                     proveedor.TipoSuministro = viewModel.TipoSuministro;
                     proveedor.FrecuenciaEntrega = viewModel.FrecuenciaEntrega;
+
+                    TempData["MensajeExito"] = "Operación realizada correctamente.";
                     return RedirectToAction("ListarProveedores");
                 }
             }
@@ -187,6 +191,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
             }
 
             _datos.Proveedores.Remove(proveedor);
+
+            TempData["MensajeExito"] = "Operación realizada correctamente.";
             return RedirectToAction("ListarProveedores");
         }
 

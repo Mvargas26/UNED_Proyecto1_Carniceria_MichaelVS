@@ -87,6 +87,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                     };
 
                     _datos.Clientes.Add(cliente);
+
+                    TempData["MensajeExito"] = "Operación realizada correctamente.";
                     return RedirectToAction("ListarClientes");
                 }
             }
@@ -166,6 +168,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                     cliente.PrimerApellido = viewModel.PrimerApellido;
                     cliente.SegundoApellido = viewModel.SegundoApellido;
                     cliente.FechaNacimiento = viewModel.FechaNacimiento;
+
+                    TempData["MensajeExito"] = "Operación realizada correctamente.";
                     return RedirectToAction("ListarClientes");
                 }
             }
@@ -184,6 +188,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                 return NotFound();
             }
             _datos.Clientes.Remove(cliente);
+
+            TempData["MensajeExito"] = "Operación realizada correctamente.";
             return RedirectToAction("ListarClientes");
         }//fn eliminar
 

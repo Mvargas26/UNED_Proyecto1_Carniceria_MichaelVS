@@ -53,6 +53,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                     };
 
                     _datos.Productos.Add(producto);
+
+                    TempData["MensajeExito"] = "Operación realizada correctamente.";
                     return RedirectToAction("ListarProductos");
                 }
             }
@@ -112,6 +114,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
                     producto.PrecioPorUnidadMedida = viewModel.PrecioPorUnidadMedida;
                     producto.ExistenciaActual = viewModel.ExistenciaActual;
                     producto.ExistenciaMinima = viewModel.ExistenciaMinima;
+
+                    TempData["MensajeExito"] = "Operación realizada correctamente.";
                     return RedirectToAction("ListarProductos");
                 }
             }
@@ -134,6 +138,8 @@ namespace Proyecto1_Carniceria_Michael_VS.Controllers
             }
 
             _datos.Productos.Remove(producto);
+
+            TempData["MensajeExito"] = "Operación realizada correctamente.";
             return RedirectToAction("ListarProductos");
         }
 
