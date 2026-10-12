@@ -41,6 +41,7 @@ else
         <table class="table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Código</th>
                     <th>Nombre</th>
                     <th>Categoría</th>
@@ -56,6 +57,7 @@ else
                 {
                     bool existenciaBaja = producto.ExistenciaActual <= producto.ExistenciaMinima;
                     <tr class="@(existenciaBaja ? "fila-advertencia" : "")">
+                        <td>@producto.Id</td>
                         <td>@producto.CodigoProducto</td>
                         <td>@producto.NombreProducto</td>
                         <td>@producto.Categoria.ObtenerNombreVisible()</td>

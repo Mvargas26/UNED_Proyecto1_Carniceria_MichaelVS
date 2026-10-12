@@ -41,9 +41,9 @@ else
         <table class="table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Identificación</th>
                     <th>Nombre y Apellidos</th>
-
                     <th>Fecha de Nacimiento</th>
                     <th>Salario Mensual</th>
                     <th>Fecha de Ingreso</th>
@@ -57,6 +57,7 @@ else
                 @foreach (var empleado in Model)
                 {
                     <tr>
+                        <td>@empleado.Id</td>
                         <td>@empleado.Identificacion</td>
                         <td>@empleado.Nombre @empleado.PrimerApellido @empleado.SegundoApellido</td>
                         <td>@empleado.FechaNacimiento.ToString("dd/MM/yyyy")</td>

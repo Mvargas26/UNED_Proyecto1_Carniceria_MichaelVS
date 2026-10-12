@@ -41,6 +41,7 @@ else
         <table class="table">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Identificación</th>
                     <th>Razón Social</th>
                     <th>Contacto</th>
@@ -55,6 +56,7 @@ else
                 @foreach (var proveedor in Model)
                 {
                     <tr>
+                        <td>@proveedor.Id</td>
                         <td>@proveedor.Identificacion</td>
                         <td>@proveedor.RazonSocial</td>
                         <td>@proveedor.NombreContacto</td>

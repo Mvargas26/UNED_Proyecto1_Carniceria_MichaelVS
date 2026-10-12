@@ -116,7 +116,7 @@ namespace Proyecto1_Carniceria_MichaelVS.Datos
                 RazonSocial = "Distribuidora La Pampa S.A.",
                 NombreContacto = "Roberto Alfaro",
                 Telefono = "26661234",
-                CorreoElectronico = "ventas@lapampa.example.com",
+                CorreoElectronico = "ventas@lapampa.com",
                 TipoSuministro = TipoSuministro.CarneDeRes,
                 FrecuenciaEntrega = FrecuenciaEntrega.DosVecesPorSemana
             });
@@ -128,7 +128,7 @@ namespace Proyecto1_Carniceria_MichaelVS.Datos
                 RazonSocial = "Empaques del Norte",
                 NombreContacto = "Lucía Mendoza",
                 Telefono = "88451290",
-                CorreoElectronico = "lucia@empaquesnorte.example.com",
+                CorreoElectronico = "lucia@empaquesnorte.com",
                 TipoSuministro = TipoSuministro.Empaques,
                 FrecuenciaEntrega = FrecuenciaEntrega.ContraPedido
             });
